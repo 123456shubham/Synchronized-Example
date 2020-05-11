@@ -1,0 +1,83 @@
+// Bank Example Using Sysnchorized 
+import java.util.Scanner;
+class Customer{
+	int money=10000;
+	//System.out.print("Enter The Pay Name = ");
+	//Scanner sc=new Scanner(System.in);
+	//String sc =name.nextLine();
+	//System.out.print("Enter The Amount In Words = "):
+	//String amount_in_words=sc.nextLine();
+	//System.out.print("Enter The Amount = ");
+	//int amount=sc.nextInt();
+	
+	synchronized void cheque(int money){
+		try{
+			System.out.println("ATM Card IS Blocked For 2 Min Only...");
+				Thread.sleep(1000);
+
+		if(this.money<money){
+			System.out.println("Insufficent Fund Your Check Is Bous.....");
+
+		}else{		
+     		money-=money;
+			System.out.println("With Draw Successfully......");
+		}
+		
+}catch(Exception e){
+				System.out.println(e);
+			}finally{
+				System.out.println("");
+				
+			}
+	}
+	
+	synchronized void atm(int money){
+		try{
+				Thread.sleep(2000);
+		if(this.money<money){
+			System.out.println("Insufficent Fund ");	
+		}else{		
+     		money-=money;
+			System.out.print("With Draw Successfully......");
+		}
+  }catch(Exception e){
+				System.out.println(e);
+			}finally{
+				System.out.println("Your Cheque Is Blocked For 2 Min Only...");
+			} 
+		}
+}
+
+
+
+class Chaque extends Thread{
+	Customer c;
+	Chaque(Customer c){
+		this.c=c;
+	}
+	public void run(){
+		c.cheque(100000);
+	}
+}
+
+class Atm extends Thread{
+	
+Customer c;
+Atm(Customer c){
+	this.c=c;
+}
+public void run(){
+	c.atm(1000000);
+}
+  }
+
+class Bank{
+	public static void main(String[] args){
+		 Customer c=new Customer();
+			Chaque cheque=new Chaque(c);
+			Atm atm=new Atm(c);
+			cheque.start();
+			atm.start();
+		}
+}
+		
